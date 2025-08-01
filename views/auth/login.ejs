@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Notes App</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h1>Notes App</h1>
+      <div class="nav-links">
+        <a href="/auth/login">Login</a>
+        <a href="/auth/register">Register</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <div class="auth-container">
+      <div class="auth-card">
+        <h2>Login</h2>
+        <% if (error) { %>
+          <div class="error-message"><%= error %></div>
+        <% } %>
+        <form method="post" action="/auth/login" class="auth-form">
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+        <p>Don't have an account? <a href="/auth/register">Register</a></p>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

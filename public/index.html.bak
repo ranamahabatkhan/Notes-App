@@ -1,0 +1,1 @@
+<!-- This file was renamed to prevent Express from serving EJS code as static HTML. Use views/index.ejs for your dynamic page. -->

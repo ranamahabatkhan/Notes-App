@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes App</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Notes App</h1>
+            <% if (user) { %>
+                <div class="nav-links">
+                    <span>Welcome, <%= user.username %></span>
+                    <a href="/auth/logout">Logout</a>
+                </div>
+            <% } else { %>
+                <div class="nav-links">
+                    <a href="/auth/login">Login</a>
+                    <a href="/auth/register">Register</a>
+                </div>
+            <% } %>
+        </nav>
+    </header>
+    <main>
+        <% if (user) { %>
+            <!-- Search Form -->
+            <form method="get" action="/notes" class="search-form">
+                <input
+                    type="text"
+                    name="search"
+                    value="<%= typeof search !== 'undefined' ? search : '' %>"
+                    placeholder="Search notes..."
+                    class="search-input"
+                />
+                <button type="submit" class="search-btn">Search</button>
+            </form>
+            <!-- Add Note Form -->
+            <form method="post" action="/notes" class="note-form">
+                <input type="text" name="title" placeholder="Title" class="note-input" required />
+                <textarea name="content" placeholder="Content" class="note-textarea" required></textarea>
+                <button type="submit" class="btn btn-primary">Add Note</button>
+            </form>
+            <!-- Notes List -->
+            <section class="notes-section">
+                <h2>Your Notes</h2>
+                <% if (notes.length === 0) { %>
+                    <p class="no-notes">No notes found.</p>
+                <% } else { %>
+                    <div class="notes-grid">
+                        <% notes.forEach(note => { %>
+                        <div class="note-card">
+                            <div class="note-header">
+                                <h3><%= note.title %></h3>
+                                <form method="post" action="/notes/delete/<%= note._id %>">
+                                    <button type="submit" class="btn btn-danger btn-small">Delete</button>
+                                </form>
+                            </div>
+                            <div class="note-content"><%= note.content %></div>
+                            <div class="note-date"><%= note.createdAt.toLocaleString() %></div>
+                            <a href="/notes/edit/<%= note._id %>" class="btn btn-secondary btn-small">Edit</a>
+                        </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </section>
+        <% } else { %>
+            <div class="welcome-section">
+                <h2>Welcome to Notes App</h2>
+                <p>Please login or register to start creating your notes.</p>
+                <div class="auth-buttons">
+                    <a href="/auth/login" class="btn btn-primary">Login</a>
+                    <a href="/auth/register" class="btn btn-secondary">Register</a>
+                </div>
+            </div>
+        <% } %>
+    </main>
+</body>
+</html>
